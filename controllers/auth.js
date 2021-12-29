@@ -105,7 +105,7 @@ exports.isAdmin = (req, res, next) => {
 exports.isSuperAdmin = (req, res, next) => {
   if (req.profile.role === 1) {
     return res.status(403).json({
-      error: "You are not super admin. ACCESS DENIED",
+      error: "You are not a super admin. ACCESS DENIED",
     });
   }
   next();
