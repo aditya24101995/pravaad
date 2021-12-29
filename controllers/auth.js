@@ -20,7 +20,7 @@ exports.signin = (req, res) => {
     console.log(userjson);
     if (err || userjson === null) {
       return res.status(400).json({
-        error: "The email provided doesn't exist",
+        error: "The email provided does not exist",
       });
     }
 
