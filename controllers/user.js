@@ -1,11 +1,10 @@
 const User = require("../models/user");
+const ErrorResponse = require('../utils/Error')
 
 exports.getUserById = (req, res, next, id) => {
   User.findById(id).exec((err, userjson) => {
     if (err || !userjson) {
-      return res.status(400).json({
-        error: "No user found",
-      });
+      return ErrorResponse(400,"No user found",req,res)
     }
     req.profile = userjson;
     next();
@@ -23,9 +22,7 @@ exports.getUser = (req, res) => {
 exports.getAllUsers = (req, res) => {
   User.find().exec((err, users) => {
     if (err || !users) {
-      return res.status(400).json({
-        error: "No user found",
-      });
+      return ErrorResponse(400,"No user found",req,res)
     }
     return res.json(users);
   });
@@ -37,10 +34,8 @@ exports.updateUser = (req, res) => {
     { $set: req.body },
     { new: true, useFindAndModify: false },
     (err, userjson) => {
-      if (err) {
-        return res.status(400).json({
-          error: "You are not authorized to update this user",
-        });
+      if (err || userjson === null) {
+        return ErrorResponse(400,"You are not authorized to update this user",req,res)
       }
       return res.json(userjson);
     }
@@ -49,21 +44,15 @@ exports.updateUser = (req, res) => {
 
 exports.deleteUserById = (req, res) => {
   User.findById(req.body.staffid).exec((err, staffjson) => {
-    if (err || err === null) {
-      return res.status(400).json({
-        error: "No such user found",
-      });
+    if (staffjson === null || err) {
+      return ErrorResponse(400,"No such user found",req,res)
     }
     if (staffjson.userlevel <= req.profile.userlevel) {
-      return res
-        .status(400)
-        .json({ error: "You are not authorized to delete this user" });
+      return ErrorResponse(400,"You are not authorized to delete this user",req,res)
     } else {
       User.findByIdAndDelete({ _id: req.body.staffid }, (err, userjson) => {
         if (err) {
-          return res.status(400).json({
-            error: "You are not authorized to delete this user",
-          });
+          return ErrorResponse(400,"You are not authorized to delete this user",req,res)
         }
         return res.json(userjson);
       });
