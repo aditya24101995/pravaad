@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    designation: {
+      type : String,
+      trim: true
+    },
+    department: {
+      type : String,
+      trim: true
+    },
     encry_password: {
       type: String,
       trim: true,
@@ -44,6 +52,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 3,
     },
+    isOnline: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
