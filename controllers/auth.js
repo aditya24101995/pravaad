@@ -50,10 +50,10 @@ exports.register = (req, res) => {
     }
     if (userjson) {
       res.json({
+        id: userjson._id,
         name: userjson.firstname + userjson.lastname,
         email: userjson.email,
-        description: userjson.description,
-        id: userjson._id,
+        description: userjson.description
       });
     }
   });

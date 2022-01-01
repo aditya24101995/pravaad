@@ -6,7 +6,7 @@ const { v1: uuidv1 } = require("uuid");
 const userSchema = new mongoose.Schema(
   {
     imageUrl: {
-      profile: { type: mongoose.SchemaTypes.Url},
+      profile: { type: mongoose.SchemaTypes.Url },
     },
     firstname: {
       type: String,
@@ -31,12 +31,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
     designation: {
-      type : String,
-      trim: true
+      type: String,
+      trim: true,
     },
     department: {
-      type : String,
-      trim: true
+      type: String,
+      trim: true,
     },
     encry_password: {
       type: String,
@@ -54,8 +54,8 @@ const userSchema = new mongoose.Schema(
     },
     isOnline: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
 );
