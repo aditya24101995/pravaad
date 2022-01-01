@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
 const {
   createRoom,
   updateRoom,
   deleteRoom,
-  getRoomById,
+  getRoom,
 } = require("../controllers/room");
 
 const {
@@ -15,10 +16,11 @@ const {
 } = require("../controllers/auth");
 const { getUser, getUserById, getAllUsers } = require("../controllers/user");
 
-router.param("roomId", getRoomById);
+router.param("roomId", getRoom);
+router.param("userId", getUserById);
 
 router.post(
-  "/create",
+  "/create/:userId",
   [
     check("name", "Room name is required. Max length is 64 letters").isLength({
       max: 64,
@@ -28,5 +30,7 @@ router.post(
   authenticated,
   createRoom
 );
-router.put("/update/:roomId", isSignedIn, authenticated, updateRoom);
-router.delete("/delete/:roomId", isSignedIn, authenticated, deleteRoom);
+router.put("/update/:userId/:roomId", isSignedIn, authenticated, updateRoom);
+router.delete("/delete/:userId/:roomId", isSignedIn, authenticated, deleteRoom);
+
+module.exports = router

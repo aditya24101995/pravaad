@@ -39,9 +39,6 @@ exports.register = (req, res) => {
   //Check for errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    /* return res.status(422).json({
-      error: errors.array()[0].msg,
-    }); */
     return ErrorResponse(422,errors.array()[0].msg,req,res)
   }
 
