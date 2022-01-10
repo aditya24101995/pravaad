@@ -30,7 +30,17 @@ router.post(
   authenticated,
   createRoom
 );
-router.put("/update/:userId/:roomId", isSignedIn, authenticated, updateRoom);
+router.put(
+  "/update/:userId/:roomId",
+  [
+    check("name", "Room name is required. Max length is 64 letters").isLength({
+      max: 64,
+    }),
+  ],
+  isSignedIn,
+  authenticated,
+  updateRoom
+);
 router.delete("/delete/:userId/:roomId", isSignedIn, authenticated, deleteRoom);
 
-module.exports = router
+module.exports = router;
